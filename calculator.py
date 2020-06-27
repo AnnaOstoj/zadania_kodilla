@@ -2,42 +2,70 @@ import logging
 
 logging.basicConfig(level = logging.INFO, format='%(asctime)s %(message)s', filename="logfile.log")
 
-task_dict = {1: "Dodawanie", 2: "Odejmowanie", 3: "Mnożenie", 4: "Dzielenie"}
-
 # -- functions -- 
 
-def dodawanie(add_components_float):
+def dodawanie(numbers_float):
     result = 0
-    print(f"Dodaję: {add_components_float}")
+    print(f"Dodaję: {numbers_float}")
 
-    for i in add_components_float:
+    for i in numbers_float:
         result += i
 
     return result
     
-def odejmowanie(num_1, num_2):
-    print(f"Odejmuję: {num_1} i {num_2}")
-    return num_1 - num_2
+def odejmowanie(numbers_float):
 
-def mnozenie(add_components_float):
+    print(f"Odejmuję: {numbers_float}")
+    return numbers_float[0] -  numbers_float[1]
+
+def mnozenie(numbers_float):
     result = 1
-    print(f"Mnożę: {add_components}")
+    print(f"Mnożę: {numbers_float}")
 
-    for i in add_components_float:
+    for i in numbers_float:
         result *= i
     return result
 
-def dzielenie(num_1, num_2):
-    if num_2 != 0:
-        print(f"Dzielę: {num_1} i {num_2}")
-        return num_1 / num_2
+def dzielenie(numbers_float):
+    if numbers_float[1] != 0:
+        print(f"Dzielę: {numbers_float}")
+        return numbers_float[0] /  numbers_float[1]
     else:
         print("Druga liczba nie może być zerem!")
         return None
         
+def get_data(task):
+
+    if task == 2 or task == 4:
+        while True:
+            try:
+                num_1 = float(input("Podaj pierwszą liczbę: "))
+                num_2 = float(input("Podaj drugą liczbę: "))
+                logging.info("Podane liczby są typu float")
+                return [num_1, num_2]
+                break
+            except ValueError:
+                print("Oops!  Nieprawidłowa liczba. Spróbuj jeszcze raz!")
+                logging.warning("Podana liczba nie jest typu float")
+
+    elif task == 1 or task == 3:  
+        while True:
+            try:
+                numbers = input("Podaj dowolną ilość liczb. Rodziel je przecinkami, bez spacji: ").split(",")
+                numbers_float = [float(num) for num in numbers]
+                logging.info("Podane liczby są typu float")
+                return numbers_float
+                break
+            except ValueError:
+                print("Podaj tylko liczby!")
+                logging.warning("Podane liczby nie są typu float")
+
+
+task_dict = {1: dodawanie, 2: odejmowanie, 3: mnozenie, 4: dzielenie}
 
 logging.info(" - - Start programu - - ")
-# -- get input data -- 
+
+# get function type
 
 task = int(input("Podaj działanie, posługując się odpowiednią liczbą: 1 Dodawanie, 2 Odejmowanie, 3 Mnożenie, 4 Dzielenie: "))
 if int(task) not in range(5):
@@ -46,46 +74,13 @@ if int(task) not in range(5):
     exit()
 logging.info(f"Wybrano: {task_dict[task]}")
 
-if task == 2 or task == 4:
-    while True:
-        try:
-            num_1 = float(input("Podaj pierwszą liczbę: "))
-            num_2 = float(input("Podaj drugą liczbę: "))
-            logging.info("Podane liczby są typu float")
-            break
-        except ValueError:
-            print("Oops!  Nieprawidłowa liczba. Spróbuj jeszcze raz!")
-            logging.warning("Podana liczba nie jest typu float")
+# get input for function
 
-elif task == 1 or task == 3:  
-    while True:
-        try:
-            add_components = input("Podaj dowolną ilość liczb. Rodziel je przecinkami, bez spacji: ").split(",")
-            add_components_float = [float(num) for num in add_components]
-            logging.info("Podane liczby są typu float")
-            break
-        except ValueError:
-            print("Podaj tylko liczby!")
-            logging.warning("Podane liczby nie są typu float")
+data = get_data(task)
 
-# -- calculate -- 
+result = task_dict[task](data)
 
-if task == 1:
-    print("Wynik działania to: {}". format(dodawanie(add_components_float)))
-    logging.info(f"Wykonano działanie {task_dict[task]} dla {add_components_float}")
-elif task == 2:
-    print("Wynik działania to: {}". format(odejmowanie(num_1, num_2)))
-    logging.info(f"Wykonano działanie {task_dict[task]} dla {num_1} i {num_2}")
-elif task == 3:
-    print("Wynik działania to: {}". format(mnozenie(add_components_float)))
-    logging.info(f"Wykonano działanie {task_dict[task]} dla {add_components_float}")
-elif task == 4:
-    result = dzielenie(num_1, num_2)
-    if result != None:
-        logging.info(f"Wykonano działanie {task_dict[task]} dla {num_1} i {num_2}")
-        print("Wynik działania to: {}". format(dzielenie(num_1, num_2)))
-    else:
-        logging.warning(f"Próbowano podzielić {num_1} przez 0")
-
+print("Wynik działania to: {}". format(result))
+logging.info(f"Wykonano działanie {task_dict[task]} dla {data}")
 
 logging.info(" - - Koniec programu - - ")
