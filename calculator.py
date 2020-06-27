@@ -2,10 +2,41 @@ import logging
 
 logging.basicConfig(level = logging.INFO, format='%(asctime)s %(message)s', filename="logfile.log")
 
-logging.info(" - - Start programu - - ")
-
 task_dict = {1: "Dodawanie", 2: "Odejmowanie", 3: "Mnożenie", 4: "Dzielenie"}
 
+# -- functions -- 
+
+def dodawanie(add_components_float):
+    result = 0
+    print(f"Dodaję: {add_components_float}")
+
+    for i in add_components_float:
+        result += i
+
+    return result
+    
+def odejmowanie(num_1, num_2):
+    print(f"Odejmuję: {num_1} i {num_2}")
+    return num_1 - num_2
+
+def mnozenie(add_components_float):
+    result = 1
+    print(f"Mnożę: {add_components}")
+
+    for i in add_components_float:
+        result *= i
+    return result
+
+def dzielenie(num_1, num_2):
+    if num_2 != 0:
+        print(f"Dzielę: {num_1} i {num_2}")
+        return num_1 / num_2
+    else:
+        print("Druga liczba nie może być zerem!")
+        return None
+        
+
+logging.info(" - - Start programu - - ")
 # -- get input data -- 
 
 task = int(input("Podaj działanie, posługując się odpowiednią liczbą: 1 Dodawanie, 2 Odejmowanie, 3 Mnożenie, 4 Dzielenie: "))
@@ -40,30 +71,21 @@ elif task == 1 or task == 3:
 # -- calculate -- 
 
 if task == 1:
-    result = 0
-    print(f"Dodaję: {add_components}")
-    for i in add_components_float:
-        result += i
-    print(f"Wynik to: {result}")
+    print("Wynik działania to: {}". format(dodawanie(add_components_float)))
     logging.info(f"Wykonano działanie {task_dict[task]} dla {add_components_float}")
 elif task == 2:
-    print(f"Odejmuję: {num_1} i {num_2}")
-    print(num_1 - num_2)
+    print("Wynik działania to: {}". format(odejmowanie(num_1, num_2)))
     logging.info(f"Wykonano działanie {task_dict[task]} dla {num_1} i {num_2}")
 elif task == 3:
-    result = 1
-    print(f"Mnożę: {add_components}")
-    for i in add_components_float:
-        result *= i
-    print(f"Wynik to: {result}")
+    print("Wynik działania to: {}". format(mnozenie(add_components_float)))
     logging.info(f"Wykonano działanie {task_dict[task]} dla {add_components_float}")
 elif task == 4:
-    if num_2 != 0:
-        print(f"Dzielę: {num_1} i {num_2}")
-        print(num_1 / num_2)
+    result = dzielenie(num_1, num_2)
+    if result != None:
         logging.info(f"Wykonano działanie {task_dict[task]} dla {num_1} i {num_2}")
+        print("Wynik działania to: {}". format(dzielenie(num_1, num_2)))
     else:
-        print("Druga liczba nie może być zerem!")
         logging.warning(f"Próbowano podzielić {num_1} przez 0")
+
 
 logging.info(" - - Koniec programu - - ")
