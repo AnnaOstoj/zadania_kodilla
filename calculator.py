@@ -43,7 +43,6 @@ def get_data(task):
                 num_2 = float(input("Podaj drugą liczbę: "))
                 logging.info("Podane liczby są typu float")
                 return [num_1, num_2]
-                break
             except ValueError:
                 print("Oops!  Nieprawidłowa liczba. Spróbuj jeszcze raz!")
                 logging.warning("Podana liczba nie jest typu float")
@@ -55,7 +54,6 @@ def get_data(task):
                 numbers_float = [float(num) for num in numbers]
                 logging.info("Podane liczby są typu float")
                 return numbers_float
-                break
             except ValueError:
                 print("Podaj tylko liczby!")
                 logging.warning("Podane liczby nie są typu float")
