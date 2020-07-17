@@ -9,13 +9,12 @@ class BaseContact:
         self.email = email
 
     def __str__(self):
-        return f"{self.first_name}, {self.last_name},"\
-            + "{self.phone}, {self.email}"
+        return f"{self.first_name}, {self.last_name}, {self.phone}, {self.email}"
 
     def contact(self):
         return print(
-            f"Wybieram numer {self.phone} i dzwonię do "
-            + "{self.first_name} {self.last_name}")
+            f"Wybieram numer {self.phone} i dzwonię do"  
+            + f"{self.first_name} {self.last_name}")
 
     @ property
     def name_length(self):
@@ -34,8 +33,8 @@ class BusinessContact(BaseContact):
 
     def contact(self):
         return print(
-            f"Wybieram numer {self.company_phone} i"
-            + "dzwonię do {self.first_name} {self.last_name}")
+            f"Wybieram numer {self.company_phone} i "
+            + f"dzwonię do {self.first_name} {self.last_name}")
 
     @ property
     def name_length(self):
@@ -63,7 +62,7 @@ def create_contacts(card_type, amount):
     return card_list
 
 
-people = create_contacts("BusinessContact", 10)
+people = create_contacts("BaseContact", 10)
 
 for item in people:
-    print(item)
+    item.contact()
