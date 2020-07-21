@@ -10,7 +10,7 @@ def multiply_generate_views(func):
 
 
 class Film:
-    def __init__(self, title, year, gendre, number_of_vues=0):
+    def __init__(self, title: str, year: str, gendre: str, number_of_vues: int = 0):
         self.title = title
         self. year = year
         self.gendre = gendre
@@ -24,7 +24,7 @@ class Film:
 
 
 class Series(Film):
-    def __init__(self, episode_number, season_number, *args, **kwargs):
+    def __init__(self, episode_number: int, season_number: int, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.episode_number = episode_number
         self.season_number = season_number
@@ -35,62 +35,61 @@ class Series(Film):
 
 class Library:
     def __init__(self):
-        self._library = []
+        self._library: list = []
 
-    def add_to_library(self, type, *args, **kwargs):
-        self.type = type
-        if self.type == "Film":
+    def add_to_library(self, type: str, *args, **kwargs) -> list:
+        if type == "Film":
             self._library.append(Film(*args, **kwargs))
-        elif self.type == "Series":
+        elif type == "Series":
             self._library.append(Series(*args, **kwargs))
 
-    def show_content(self):
+    def show_content(self) -> str:
         for item in self._library:
             print(item)
 
-    def get_movies(self):
+    def get_movies(self) -> list:
         movies_list = [item for item in self._library if "Film" in str(type(item))]
         return movies_list
 
-    def get_series(self):
+    def get_series(self) -> list:
         series_list = [item for item in self._library if "Series" in str(type(item))]
         return series_list
 
-    def search(self, title):
-        self.title = title
-        found_value = [item for item in self._library if item.title == self.title]
+    def search(self, title: str) -> list:
+        found_value = [item for item in self._library if item.title == title]
         return found_value
 
     @multiply_generate_views
-    def generate_views(self):
+    def generate_views(self) -> int:
         random_index = random.randrange(len(self._library))
         element = self._library[random_index]
         element.number_of_vues += random.randrange(1, 100)
 
-    def top_titles_type(self, content_type):
-        self.content_type = content_type
-        library_type = [item for item in self._library if self.content_type in str(type(item))]
+    def top_titles_type(self, content_type: dict(type=str, help="Film or Series")) -> list:
+        library_type = [item for item in self._library if content_type in str(type(item))]
         top_titles_list = sorted(library_type, key=lambda item: item.number_of_vues)[0:3]
         return top_titles_list
 
-    def top_titles(self):
+    def top_titles(self) -> list:
         top_titles_list = sorted(
             self._library, key=lambda item: item.number_of_vues)[0:3]
         return top_titles_list
 
-    def show_nr_of_episodes(self, title):
+    def show_nr_of_episodes(self, title: str) -> int:
         list_of_episodes = [item for item in self._library if item.title == title]
         number_of_episodes = len(list_of_episodes)
         return number_of_episodes
 
 
 def add_season(
-                s_title, s_year, s_gendre,
-                s_season_number, number_of_episodes):
+                s_title: str, s_year: str, s_gendre: str,
+                s_season_number: int, number_of_episodes: int) -> list:
     for i in range(1, int(number_of_episodes) + 1):
         library.add_to_library(
                                 "Series", title=s_title, year=s_year, gendre=s_gendre,
                                 episode_number=i, season_number=s_season_number)
+
+
 
 
 if __name__ == "__main__":
@@ -141,6 +140,7 @@ if __name__ == "__main__":
     add_season(
                 s_title="Gladiator", s_year="2008", s_gendre="Drama",
                 s_season_number=3, number_of_episodes=9)
+
 
     library.generate_views()
 
