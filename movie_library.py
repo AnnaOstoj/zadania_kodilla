@@ -37,13 +37,13 @@ class Library:
     def __init__(self):
         self._library: list = []
 
-    def add_to_library(self, type: str, *args, **kwargs) -> list:
+    def add_to_library(self, type: str, *args, **kwargs):
         if type == "Film":
             self._library.append(Film(*args, **kwargs))
         elif type == "Series":
             self._library.append(Series(*args, **kwargs))
 
-    def show_content(self) -> str:
+    def show_content(self):
         for item in self._library:
             print(item)
 
@@ -60,7 +60,7 @@ class Library:
         return found_value
 
     @multiply_generate_views
-    def generate_views(self) -> int:
+    def generate_views(self):
         random_index = random.randrange(len(self._library))
         element = self._library[random_index]
         element.number_of_vues += random.randrange(1, 100)
